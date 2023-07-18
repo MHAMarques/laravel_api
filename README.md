@@ -1,66 +1,68 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## INSTALAÇÃO
 
-## About Laravel
+É necessário instalar servidor Apache com MySQL, PHP 8.1 e Composer. Na pasta que contém os arquivos da API execute o comando abaixo para instalar as dependências:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<pre>
+    <code>composer install</code>
+</pre>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Utilize o arquivo <code>.env.example</code> para criar e configurar o arquivo de ambiente <code>.env</code> com as definições para conexão com o banco de dados, chave JWT e outras opções do arquivo.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## MySQL MIGRATIONS
 
-## Learning Laravel
+Uma vez que tiver as configurações bem definidas no arquivo de ambiente para comunicar com um banco de dados MySQL criado previamente, execute o comando abaixo para persistir as migrations definidas na API.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+<pre>
+    <code>php artisan migrate</code>
+</pre>
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## ROTAS DE ACESSO
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Com o banco de dados pronto para receber os dados das requisições, utilize os endpoints abaixo em cada rota disponível.
 
-## Laravel Sponsors
+<pre>
+    <code>
+    POST: /api/users -> Criar novo usuário
+    GET: /api/users -> Listar usuários (Autenticado)
+    GET: /api/users/{id} -> Mostrar um usuário (Autenticado)
+    PATCH: /api/users/{id} -> Alterar um usuário (Autenticado)
+    DELETE: /api/users/{id} -> Remover um usuário (Autenticado)
+    </code>
+</pre>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## AUTENTICAÇÃO
 
-### Premium Partners
+Utilize a rota abaixo para obter um token de acesso que será responsável pela autenticação das rotas seguras da API.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+<pre>
+    <code>
+    POST: /api/login -> Para autenticar o acesso na API
+    
+    {
+        "email":"exemplo@mail.com",
+        "password":"SenhaDeAcesso" 
+    }
+    </code>
+</pre>
 
-## Contributing
+## INTERFACE
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Utilize a interface abaixo para interagir com requisições para criação e atualização de contas no sistema, que responde com a mesma estrutura de dados, com excessão da senha.
 
-## Code of Conduct
+<pre>
+    <code>
+    POST: /api/user
+    PATCH: /api/user/{id}
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    { 
+        "first_name":"Marcelo Henrique",
+        "last_name":"A Marques",
+        "email":"mh@mh.app.br",
+        "password":"SenhaDeAcesso",
+        "city":"Belo Horizonte",
+        "country":"Brasil" 
+    }
+    </code>
+</pre>
