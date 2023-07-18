@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\APIError;
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\DeleteUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -33,7 +34,7 @@ class UserController extends Controller
         return UserResource::make($user);
     }
 
-    public function destroy(User $user)
+    public function destroy(DeleteUserRequest $request, User $user)
     {
         $user->delete();
         return response()->json([
