@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\APIError;
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\ShowUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Services\ShowUserService;
+use App\Services\UpdateUserService;
 
 class UserController extends Controller
 {
@@ -21,23 +23,16 @@ class UserController extends Controller
         return UserResource::make($storeUser);
     }
 
-    public function show(User $user)
+    public function show(ShowUserRequest $request, $id)
     {
-        return UserResource::make($user);
+        $ShowUserService = new ShowUserService();
+        return $ShowUserService->execute($id);
     }
 
 
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, $id)
     {
-        $user->update($request->validated());
-        return UserResource::make($user);
-    }
-
-    public function destroy(User $user)
-    {
-        $user->delete();
-        return response()->json([
-            'message' => 'The User is gone'
-        ], 410);
+        $UpdateUserService = new UpdateUserService();
+        return $UpdateUserService->execute($request, $id);
     }
 }
