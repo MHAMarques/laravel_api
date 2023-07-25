@@ -17,11 +17,11 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => 'sometimes|required',
-            'last_name' => 'sometimes|required',
-            'password' => 'sometimes|required',
-            'city' => 'sometimes|required',
-            'country' => 'sometimes|required',
+            'first_name' => ['sometimes', 'max:120', 'min: 2'],
+            'last_name' => ['sometimes', 'max:120', 'min: 2'],
+            'city' => ['sometimes', 'max:120', 'min: 2'],
+            'country' => ['sometimes', 'max:120', 'min: 2'],
+            'password' => ['sometimes', 'min:6', 'max:120'],
         ];
     }
 }

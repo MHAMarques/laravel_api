@@ -9,7 +9,7 @@ class AuthService
     public function execute(array $data)
     {
         if (!$token = auth()->attempt($data)) {
-            throw new APIError('Email ou senha incorretos', 401);
+            throw new APIError('Not acceptable credentials', 406);
         }
 
         return $this->responseToken($token);
